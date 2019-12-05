@@ -10,10 +10,10 @@ namespace HangMan
 
         public void printWords()
         {
-<<<<<<< HEAD
-            int i = 0;
-            Console.WriteLine(words[0]);
-=======
+
+            
+            
+
             string word1 = words[0];
             string word2 = words[1];
             string word3 = words[2];
@@ -25,12 +25,8 @@ namespace HangMan
             string word9 = words[8];
             string word10 = words[9];
 
->>>>>>> Alex
+
         }
-
-	
-
-	
 
     }
 }

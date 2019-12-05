@@ -10,6 +10,7 @@ namespace HangMan
 
         public void printWords()
         {
+
             string word1 = words[0];
             string word2 = words[1];
             string word3 = words[2];
@@ -22,10 +23,6 @@ namespace HangMan
             string word10 = words[9];
 
         }
-
-	
-
-	
 
     }
 }
