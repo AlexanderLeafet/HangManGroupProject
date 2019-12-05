@@ -1,5 +1,5 @@
 using NUnit.Framework;
-
+using HangMan;
 namespace HangManTesting
 {
     public class GameTesting
@@ -10,9 +10,15 @@ namespace HangManTesting
         }
 
         [Test]
-        public void Test1()
+
+        public void IsGuessedLetters_GivenAChar_ReturnTrue()
         {
-            Assert.Pass();
+            char testGuess = 'a';
+
+            Game game = new Game();
+            game.GuessedLetters();
+            game.guess = 'a';
+            Assert.True(game.guess == testGuess);
         }
     }
 }

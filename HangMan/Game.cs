@@ -1,21 +1,78 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace HangMan
 {
     public class Game
     {
-        public void printWords()
+        Random random = new Random();
+
+        public char guess;
+        public string wordToGuess;
+        public string wordToGuessUppercase;
+        public int lives = 5;
+
+        string[] wordBank = File.ReadAllLines("Words.txt");
+        List<char> GuessedLetter = new List<char>();
+        
+        
+        public void WordHandling()
         {
-            Random random = new Random((int)DateTime.Now.Ticks);
+            wordToGuess = wordBank[random.Next(0, wordBank.Length)];
+            wordToGuessUppercase = wordToGuess.ToUpper();
+            char WordToGuessChar = Convert.ToChar(wordToGuess);
 
-            string[] wordBank = System.IO.File.ReadAllLines("Words.txt");
+        }
 
-            string wordToGuess = wordBank[random.Next(0, wordBank.Length)];
-            string wordToGuessUppercase = wordToGuess.ToUpper();
 
-            StringBuilder displayToPlayer = new StringBuilder(wordToGuess.Length);
+        public char GuessedLetters()
+        {
+            Console.WriteLine("Enter your guess letter: ");
+            string guessingInput = Console.ReadLine();
+            guess = guessingInput[0];
+            GuessedLetter.Add(guess);
+            return guess;
+        }
+
+        public bool DoesLetterExistInTheWord()
+        {
+            GuessedLetters();
+            if (wordToGuess.Contains(guess))
+            {
+                Console.WriteLine("The word contains your guessed letter.");
+                StringBuilder displayToPlayer = new StringBuilder(wordToGuess.Length);
+                for (int i = 0; i < wordToGuess.Length; i++)
+                    displayToPlayer.Append('_');
+                return true;
+            }
+            else 
+            {
+                Console.WriteLine("The word does not contains your guessed letter.");
+                lives--;
+                return false;
+            } 
+            
+                
+        }
+            
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            /*StringBuilder displayToPlayer = new StringBuilder(wordToGuess.Length);
             for (int i = 0; i < wordToGuess.Length; i++)
                 displayToPlayer.Append('_');
 
@@ -80,7 +137,8 @@ namespace HangMan
 
             Console.Write("Press ENTER to exit...");
             Console.ReadLine();
-        }
+            */
+        
 
-    }
-}
+ }
+
