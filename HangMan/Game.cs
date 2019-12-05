@@ -10,13 +10,9 @@ namespace HangMan
 
         public void printWords()
         {
-            int i = 0;
-            Console.WriteLine(words[0]);
+            
+            
         }
-
-	
-
-	
 
     }
 }
