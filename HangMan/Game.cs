@@ -10,10 +10,8 @@ namespace HangMan
 
         public void printWords()
         {
-            foreach (var word in words)
-            {
-                Console.WriteLine(word);
-            }
+            int i = 0;
+            Console.WriteLine(words[0]);
         }
 
 	
