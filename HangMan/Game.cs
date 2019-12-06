@@ -13,51 +13,93 @@ namespace HangMan
         public string wordToGuess;
         public string wordToGuessUppercase;
         public int lives = 5;
+        public int lettersRevealed = 0;
+        public bool gameWon = false;
+        public bool gameLost = false;
+
+        StringBuilder displayToPlayer;
 
         string[] wordBank = File.ReadAllLines("Words.txt");
         List<char> GuessedLetter = new List<char>();
-        
-        
+
         public void WordHandling()
         {
             wordToGuess = wordBank[random.Next(0, wordBank.Length)];
             wordToGuessUppercase = wordToGuess.ToUpper();
-            char WordToGuessChar = Convert.ToChar(wordToGuess);
-
+            displayToPlayer = new StringBuilder(wordToGuess.Length);
+            for (int i = 0; i < wordToGuess.Length; i++)
+                displayToPlayer.Append('_');
         }
 
 
-        public char GuessedLetters()
+        public char LetterInput()
         {
-            Console.WriteLine("Enter your guess letter: ");
-            string guessingInput = Console.ReadLine();
-            guess = guessingInput[0];
-            GuessedLetter.Add(guess);
+            Console.WriteLine(displayToPlayer); //prints out all the underscores and matches the length of the word
+            Console.WriteLine(wordToGuessUppercase); //makes the hidden word Uppercase
+            Console.Write("Enter your guess letter: ");
+            string guessingInput = Console.ReadLine().ToUpper(); //Stores user input and makes it Uppercase
+            guess = guessingInput[0]; //stores the first letter in userinput to "guess" for example: HEY would be H
+            //This is so that you can't guess several letters at once
+            GuessedLetter.Add(guess); // Adds that letter to a list of chars
             return guess;
         }
 
         public bool DoesLetterExistInTheWord()
         {
-            GuessedLetters();
             if (wordToGuess.Contains(guess))
             {
-                Console.WriteLine("The word contains your guessed letter.");
-                StringBuilder displayToPlayer = new StringBuilder(wordToGuess.Length);
                 for (int i = 0; i < wordToGuess.Length; i++)
-                    displayToPlayer.Append('_');
+                {
+                    if (wordToGuessUppercase[i] == guess)
+                    {
+                        displayToPlayer[i] = wordToGuess[i];
+                        lettersRevealed++;
+                    }
+                }
+                Console.WriteLine("The word contains your guessed letter.");
+
+
                 return true;
             }
             else 
             {
                 Console.WriteLine("The word does not contains your guessed letter.");
-                lives--;
+                DecreasingLives(lives);
                 return false;
-            } 
-            
-                
+            }        
+        }
+
+        public bool CheckLives()
+        {
+            Console.WriteLine($"Remaining lives: {lives}");
+            if (lettersRevealed == wordToGuess.Length)
+            {
+                Console.WriteLine("YOU WIN!!!");
+                Console.ReadKey();
+                return gameWon = true;
+            }
+            else if (lives == 0)
+            {
+                Console.WriteLine("You DIED!");
+                Console.ReadKey();
+                return gameLost = true;
+
+            }
+            else
+            {
+                return gameWon = false;
+            }
+        }
+
+        public int DecreasingLives(int lifeInput)
+        {
+            lives = lifeInput;
+            lives--;
+
+            return lives;
         }
             
-        }
+}
 
 
 

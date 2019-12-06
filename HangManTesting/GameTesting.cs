@@ -4,21 +4,43 @@ namespace HangManTesting
 {
     public class GameTesting
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
+        
 
         [Test]
 
-        public void IsGuessedLetters_GivenAChar_ReturnTrue()
+        public void Lives_EqualsFive_ReturnTrue()
         {
-            char testGuess = 'a';
+            int expectedLives = 5;
 
             Game game = new Game();
-            game.GuessedLetters();
-            game.guess = 'a';
-            Assert.True(game.guess == testGuess);
+            int actualLives = game.lives;
+
+            Assert.AreEqual(actualLives, expectedLives);
         }
+
+        [Test]
+        public void Lives_WrongDataType_ReturnsNotEqual()
+        {
+            string stringLife = "5";
+
+            Game game = new Game();
+            int actualLives = game.lives;
+
+            Assert.AreNotEqual(stringLife, actualLives);
+
+        }
+
+        [Test]
+        public void DecreaseLives_Given5_Return4()
+        {
+            int lives = 5;
+
+            Game game = new Game();
+            int sum = game.DecreasingLives(lives);
+            
+            Assert.AreEqual(sum, 4);
+        }
+
+
     }
 }
