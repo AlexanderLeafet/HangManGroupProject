@@ -27,20 +27,29 @@ namespace HangMan
             wordToGuess = wordBank[random.Next(0, wordBank.Length)];
             wordToGuessUppercase = wordToGuess.ToUpper();
             displayToPlayer = new StringBuilder(wordToGuess.Length);
+            //Console.WriteLine(wordToGuessUppercase); //makes the hidden word Uppercase
             for (int i = 0; i < wordToGuess.Length; i++)
                 displayToPlayer.Append('_');
         }
 
-
         public char LetterInput()
         {
             Console.WriteLine(displayToPlayer); //prints out all the underscores and matches the length of the word
-            Console.WriteLine(wordToGuessUppercase); //makes the hidden word Uppercase
             Console.Write("Enter your guess letter: ");
-            string guessingInput = Console.ReadLine().ToUpper(); //Stores user input and makes it Uppercase
-            guess = guessingInput[0]; //stores the first letter in userinput to "guess" for example: HEY would be H
-            //This is so that you can't guess several letters at once
+            string input = Console.ReadLine(); //Stores user input and makes it Uppercase
+            InputStringToChar(input);
+           
             GuessedLetter.Add(guess); // Adds that letter to a list of chars
+
+            return guess;
+        }
+
+        public char InputStringToChar(string input)
+        {
+            var answer = input[0];//stores the first letter in userinput to "guess" for example: HEY would be H
+                             //This is so that you can't guess several letters at once
+            guess = char.ToUpper(answer);
+
             return guess;
         }
 
@@ -58,7 +67,6 @@ namespace HangMan
                 }
                 Console.WriteLine("The word contains your guessed letter.");
 
-
                 return true;
             }
             else 
@@ -74,13 +82,15 @@ namespace HangMan
             Console.WriteLine($"Remaining lives: {lives}");
             if (lettersRevealed == wordToGuess.Length)
             {
-                Console.WriteLine("YOU WIN!!!");
+                Console.WriteLine("\nYOU WIN!!!");
+                Console.WriteLine($"The word was {wordToGuess}");
                 Console.ReadKey();
                 return gameWon = true;
             }
             else if (lives == 0)
             {
-                Console.WriteLine("You DIED!");
+                Console.WriteLine("\nYou DIED!");
+                Console.WriteLine($"The word was {wordToGuess}");
                 Console.ReadKey();
                 return gameLost = true;
 

@@ -4,10 +4,7 @@ namespace HangManTesting
 {
     public class GameTesting
     {
-        
-
         [Test]
-
         public void Lives_EqualsFive_ReturnTrue()
         {
             int expectedLives = 5;
@@ -41,6 +38,26 @@ namespace HangManTesting
             Assert.AreEqual(sum, 4);
         }
 
+        [Test]
+        public void LetterInput_GivenHey_ReturnH()
+        {
+            string input = "Hey";
 
+            Game game = new Game();
+            var testInput = game.InputStringToChar(input);
+
+            Assert.AreEqual(testInput, 'H');
+        }
+
+        [Test]
+        public void LetterInput_GivenLowercase_ReturnUppercase()
+        {
+            string input = "h";
+
+            Game game = new Game();
+            var testInput = game.InputStringToChar(input);
+
+            Assert.AreEqual(testInput, 'H');
+        }
     }
 }
