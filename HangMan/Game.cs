@@ -66,7 +66,6 @@ namespace HangMan
                     }
                 }
                 Console.WriteLine("The word contains your guessed letter.");
-
                 return true;
             }
             else 
@@ -77,28 +76,14 @@ namespace HangMan
             }        
         }
 
-        public bool CheckLives()
+        public void GameStatus()
         {
-            Console.WriteLine($"Remaining lives: {lives}");
-            if (lettersRevealed == wordToGuess.Length)
-            {
-                Console.WriteLine("\nYOU WIN!!!");
-                Console.WriteLine($"The word was {wordToGuess}");
-                Console.ReadKey();
-                return gameWon = true;
-            }
-            else if (lives == 0)
-            {
-                Console.WriteLine("\nYou DIED!");
-                Console.WriteLine($"The word was {wordToGuess}");
-                Console.ReadKey();
-                return gameLost = true;
 
-            }
-            else
-            {
-                return gameWon = false;
-            }
+            GameLost(lives);
+            GameWon();
+           
+           
+
         }
 
         public int DecreasingLives(int lifeInput)
@@ -108,6 +93,44 @@ namespace HangMan
 
             return lives;
         }
+        public bool GameLost(int livesInput)
+      {
+            lives = livesInput;
+
+            Console.WriteLine($"Remaining lives: {lives}");
+            if (lives == 0)
+            {
+                Console.WriteLine("YOU DEAD!");
+                //Console.ReadKey();
+
+                return gameLost = true;
+            }
+            //else if (lives == 1)
+            //{
+            //    return gameLost = true;
+            //}
+            else
+            {
+                return gameLost = false;
+            }
+
+        }
+        public bool GameWon()
+        {
+            if (lettersRevealed == wordToGuess.Length)
+            {
+                Console.WriteLine("\nYOU WIN!!!");
+                Console.WriteLine($"The word was {wordToGuess}");
+                Console.ReadKey();
+                return gameWon = true;
+            }
+
+            else
+            {
+                return gameWon = false;
+            }
+        }
+
             
 }
 

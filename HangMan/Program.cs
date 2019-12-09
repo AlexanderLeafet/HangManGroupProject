@@ -15,10 +15,11 @@ namespace HangMan
             {
                 game.LetterInput();
                 game.DoesLetterExistInTheWord();
-                game.CheckLives();
+                game.GameStatus();
                 Console.WriteLine();
                // Console.ReadKey();
-            } while (game.gameWon == false || game.gameLost == false);
+            } while (game.gameWon == false && game.gameLost == false);
+            Console.ReadKey();
             
             
            

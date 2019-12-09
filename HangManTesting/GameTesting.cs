@@ -59,5 +59,38 @@ namespace HangManTesting
 
             Assert.AreEqual(testInput, 'H');
         }
+
+        [Test]
+        public void GameLost_givenZero_returnTrue()
+        {
+
+            Game game = new Game();
+            int lifeZero = 0;
+
+            bool result = game.GameLost(lifeZero);
+
+            Assert.True(result);
+
+        }
+        [Test]
+        public void GameLost_givenFour_returnFalse()
+        {
+            int life = 4;
+            Game game = new Game();
+            bool result = game.GameLost(life);
+
+            Assert.False(result);
+
+        }
+        //[Test]
+        //public void GameLost_GivenOne_ReturnGameLostFalse()
+        //{
+        //    int lifeZero = 1;
+        //    Game game = new Game();
+        //    bool result = game.GameLost(lifeZero);
+
+        //    Assert.False(result);
+
+        //}
     }
 }
