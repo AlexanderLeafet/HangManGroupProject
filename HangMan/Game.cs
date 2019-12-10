@@ -79,7 +79,7 @@ namespace HangMan
         public void GameStatus()
         {
 
-            GameLost(lives);
+            GameLost();
             GameWon();
            
            
@@ -93,9 +93,9 @@ namespace HangMan
 
             return lives;
         }
-        public bool GameLost(int livesInput)
+        public bool GameLost()
       {
-            lives = livesInput;
+           
 
             Console.WriteLine($"Remaining lives: {lives}");
             if (lives == 0)

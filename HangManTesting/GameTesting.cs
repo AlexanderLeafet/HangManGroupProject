@@ -65,9 +65,10 @@ namespace HangManTesting
         {
 
             Game game = new Game();
-            int lifeZero = 0;
+            //int lifeZero = 0;
+            game.lives = 0;
 
-            bool result = game.GameLost(lifeZero);
+            bool result = game.GameLost();
 
             Assert.True(result);
 
@@ -77,7 +78,7 @@ namespace HangManTesting
         {
             int life = 4;
             Game game = new Game();
-            bool result = game.GameLost(life);
+            bool result = game.GameLost();
 
             Assert.False(result);
 
