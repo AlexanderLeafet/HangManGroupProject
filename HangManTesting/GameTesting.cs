@@ -34,7 +34,7 @@ namespace HangManTesting
 
             Game game = new Game();
             int sum = game.DecreasingLives(lives);
-            
+
             Assert.AreEqual(sum, 4);
         }
 
@@ -83,15 +83,32 @@ namespace HangManTesting
             Assert.False(result);
 
         }
-        //[Test]
-        //public void GameLost_GivenOne_ReturnGameLostFalse()
-        //{
-        //    int lifeZero = 1;
-        //    Game game = new Game();
-        //    bool result = game.GameLost(lifeZero);
 
-        //    Assert.False(result);
+        [Test]
+        public void GameWon_givenTDD_returnTrue()
+        {
+            string word = "TDD";
+            int letters = 3;
 
-        //}
+            Game game = new Game();
+
+            var result = game.GameWon(word, letters);
+
+            Assert.True(result);
+        }
+
+        [Test]
+        public void GameWon_givenTDD_returnFalse()
+        {
+            string word = "TDD";
+            int letters = 2;
+
+            Game game = new Game();
+
+            var result = game.GameWon(word, letters);
+
+            Assert.False(result);
+        }
+        
     }
 }

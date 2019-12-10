@@ -38,9 +38,9 @@ namespace HangMan
             Console.Write("Enter your guess letter: ");
             string input = Console.ReadLine(); //Stores user input and makes it Uppercase
             InputStringToChar(input);
-           
+            DoesLetterExistInTheWord();
             GuessedLetter.Add(guess); // Adds that letter to a list of chars
-
+            
             return guess;
         }
 
@@ -53,9 +53,27 @@ namespace HangMan
             return guess;
         }
 
+        public bool ValidCharacter(char guessInput)
+        {
+            guess = guessInput;
+            if (GuessedLetter.Contains(guess))
+            {
+                Console.WriteLine($"You already guessed the letter {guess}");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public bool DoesLetterExistInTheWord()
         {
-            if (wordToGuess.Contains(guess))
+            if (GuessedLetter.Contains(guess))
+            {
+                return ValidCharacter(guess);
+            }
+            else if (wordToGuess.Contains(guess))
             {
                 for (int i = 0; i < wordToGuess.Length; i++)
                 {
@@ -65,12 +83,14 @@ namespace HangMan
                         lettersRevealed++;
                     }
                 }
-                Console.WriteLine("The word contains your guessed letter.");
+                Console.WriteLine($"The word contains your guessed letter {guess}.");
                 return true;
             }
+            
             else 
             {
-                Console.WriteLine("The word does not contains your guessed letter.");
+                Console.WriteLine($"The word does not contains the letter {guess}.");
+
                 DecreasingLives(lives);
                 return false;
             }        
@@ -79,11 +99,9 @@ namespace HangMan
         public void GameStatus()
         {
 
-            GameLost();
-            GameWon();
-           
-           
-
+            GameLost(lives);
+            GameWon(wordToGuess, lettersRevealed);
+   
         }
 
         public int DecreasingLives(int lifeInput)
@@ -93,9 +111,9 @@ namespace HangMan
 
             return lives;
         }
-        public bool GameLost()
-      {
-           
+        public bool GameLost(int livesInput)
+        {
+            lives = livesInput;
 
             Console.WriteLine($"Remaining lives: {lives}");
             if (lives == 0)
@@ -105,23 +123,23 @@ namespace HangMan
 
                 return gameLost = true;
             }
-            //else if (lives == 1)
-            //{
-            //    return gameLost = true;
-            //}
+           
             else
             {
                 return gameLost = false;
             }
 
         }
-        public bool GameWon()
+        public bool GameWon(string word, int letters)
         {
+            wordToGuess = word;
+            lettersRevealed = letters;
+
             if (lettersRevealed == wordToGuess.Length)
             {
                 Console.WriteLine("\nYOU WIN!!!");
                 Console.WriteLine($"The word was {wordToGuess}");
-                Console.ReadKey();
+                
                 return gameWon = true;
             }
 
