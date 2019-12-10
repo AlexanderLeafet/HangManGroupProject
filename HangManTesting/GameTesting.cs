@@ -5,7 +5,7 @@ namespace HangManTesting
     public class GameTesting
     {
         [Test]
-        public void Lives_EqualsFive_ReturnTrue()
+        public void CreateGame_StartingLives_IsFive()
         {
             int expectedLives = 5;
 
@@ -30,12 +30,20 @@ namespace HangManTesting
         [Test]
         public void DecreaseLives_Given5_Return4()
         {
-            int lives = 5;
-
             Game game = new Game();
-            int sum = game.DecreasingLives(lives);
+            game.lives = 5;
+            int sum = game.DecreasingLives();
 
             Assert.AreEqual(sum, 4);
+        }
+
+        [Test]
+        public void DeacreaseLives_LivesIs5_ReturnLivesIs4()
+        {
+            Game game = new Game();
+            game.DecreasingLives();
+
+            Assert.AreEqual(game.lives, 4);
         }
 
         [Test]
@@ -61,11 +69,11 @@ namespace HangManTesting
         }
 
         [Test]
-        public void GameLost_givenZero_returnTrue()
+        public void GameLost_givenZeroLives_returnTrue()
         {
 
             Game game = new Game();
-            //int lifeZero = 0;
+            
             game.lives = 0;
 
             bool result = game.GameLost();
@@ -74,10 +82,11 @@ namespace HangManTesting
 
         }
         [Test]
-        public void GameLost_givenFour_returnFalse()
+        public void GameLost_givenFourLives_returnFalse()
         {
-            int life = 4;
+            
             Game game = new Game();
+            game.lives = 4;
             bool result = game.GameLost();
 
             Assert.False(result);
@@ -87,25 +96,34 @@ namespace HangManTesting
         [Test]
         public void GameWon_givenTDD_returnTrue()
         {
-            string word = "TDD";
-            int letters = 3;
 
             Game game = new Game();
-
-            var result = game.GameWon(word, letters);
+            game.wordToGuess = "TDD";
+            game.lettersRevealed = 3;
+            var result = game.GameWon();
 
             Assert.True(result);
         }
+        //[Test]
+        //public void WordHandling_WordIsABC_HiddenIs___()
+        //{
+
+        //    Game game = new Game();
+        //    game.wordBank = new string[] { "ABC" };
+
+        //    game.WordHandling();
+
+        //    Assert.True(result);
+        //}
 
         [Test]
         public void GameWon_givenTDD_returnFalse()
         {
-            string word = "TDD";
-            int letters = 2;
 
             Game game = new Game();
-
-            var result = game.GameWon(word, letters);
+            game.wordToGuess = "TDD";
+            game.lettersRevealed = 2;
+            var result = game.GameWon();
 
             Assert.False(result);
         }
