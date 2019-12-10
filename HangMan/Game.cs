@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace HangMan
 {
@@ -36,11 +37,24 @@ namespace HangMan
         {
             Console.WriteLine(displayToPlayer); //prints out all the underscores and matches the length of the word
             Console.Write("Enter your guess letter: ");
-            string input = Console.ReadLine(); //Stores user input and makes it Uppercase
-            InputStringToChar(input);
-            DoesLetterExistInTheWord();
-            GuessedLetter.Add(guess); // Adds that letter to a list of chars
-            
+
+            string input = Console.ReadLine();
+            if(Regex.IsMatch(input, @"^[a-zA-Z]+$"))
+            {
+                InputStringToChar(input);
+                DoesLetterExistInTheWord();
+                GuessedLetter.Add(guess);
+            }
+            else
+            {
+                Console.WriteLine("Invalid Input");
+                Console.ReadKey();
+                LetterInput();
+            }
+                 
+             //Stores user input and makes it Uppercase
+              // Adds that letter to a list of chars
+
             return guess;
         }
 
@@ -91,7 +105,7 @@ namespace HangMan
             {
                 Console.WriteLine($"The word does not contains the letter {guess}.");
 
-                DecreasingLives(lives);
+                DecreasingLives();
                 return false;
             }        
         }
@@ -99,21 +113,20 @@ namespace HangMan
         public void GameStatus()
         {
 
-            GameLost(lives);
-            GameWon(wordToGuess, lettersRevealed);
+            GameLost();
+            GameWon();
    
         }
 
-        public int DecreasingLives(int lifeInput)
+        public int DecreasingLives()
         {
-            lives = lifeInput;
+           
             lives--;
 
             return lives;
         }
-        public bool GameLost(int livesInput)
+        public bool GameLost()
         {
-            lives = livesInput;
 
             Console.WriteLine($"Remaining lives: {lives}");
             if (lives == 0)
@@ -130,11 +143,8 @@ namespace HangMan
             }
 
         }
-        public bool GameWon(string word, int letters)
+        public bool GameWon()
         {
-            wordToGuess = word;
-            lettersRevealed = letters;
-
             if (lettersRevealed == wordToGuess.Length)
             {
                 Console.WriteLine("\nYOU WIN!!!");
