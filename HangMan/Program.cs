@@ -23,7 +23,6 @@ namespace HangMan
             } while (game.gameWon == false && game.gameLost == false);
             Console.ReadKey();
             
-            
            
         }
     }
