@@ -6,10 +6,9 @@ namespace HangMan
 {
     public class MyRandom
     {
-        string[] mock = new string[] { "ABC" };
-        public string Next()
+        public int Next(int a, int b)
         {
-            return mock[0];
+            return 7;
         }
     }
 }

@@ -8,8 +8,9 @@ namespace HangMan
 {
     public class Game
     {
-        Random random = new Random();
+        public dynamic random = new Random();
 
+        public string playerName;
         public char guess;
         public string wordToGuess;
         public string wordToGuessUppercase;
@@ -17,14 +18,16 @@ namespace HangMan
         public int lettersRevealed = 0;
         public bool gameWon = false;
         public bool gameLost = false;
+        public bool validName;
 
-        StringBuilder displayToPlayer;
-
+        public StringBuilder displayToPlayer;
+        
         string[] wordBank = File.ReadAllLines("Words.txt");
         List<char> GuessedLetter = new List<char>();
 
         public void WordHandling()
         {
+            
             wordToGuess = wordBank[random.Next(0, wordBank.Length)];
             wordToGuessUppercase = wordToGuess.ToUpper();
             displayToPlayer = new StringBuilder(wordToGuess.Length);
@@ -52,9 +55,6 @@ namespace HangMan
                 LetterInput();
             }
                  
-             //Stores user input and makes it Uppercase
-              // Adds that letter to a list of chars
-
             return guess;
         }
 
@@ -159,7 +159,20 @@ namespace HangMan
             }
         }
 
-            
+        public bool PlayerName()
+        { 
+            Console.Write("Please enter your username: ");
+            playerName = Console.ReadLine();
+            if (Regex.IsMatch(playerName, @"^[a-zA-Z]+$"))
+            {
+                return validName = true;
+            }
+            else
+            {
+                return validName = false;
+            }
+        }
+     
 }
 
 

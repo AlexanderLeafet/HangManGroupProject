@@ -13,6 +13,7 @@ namespace HangMan
         {
             Game game = new Game();
             game.WordHandling();
+            game.PlayerName();
             do
             {
                 game.LetterInput();
