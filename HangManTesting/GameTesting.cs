@@ -43,7 +43,7 @@ namespace HangManTesting
         {
             Game game = new Game();
             game.lives = 5;
-            int sum = game.DecreasingLives();
+            int sum = game.DecreaseLives();
 
             Assert.AreEqual(sum, 4);
         }
@@ -52,7 +52,7 @@ namespace HangManTesting
         public void DecreaseLives_LivesIs5_ReturnLivesIs4()
         {
             Game game = new Game();
-            game.DecreasingLives();
+            game.DecreaseLives();
 
             Assert.AreEqual(game.lives, 4);
         }
@@ -201,29 +201,39 @@ namespace HangManTesting
 
             Assert.AreEqual(game.wordToGuess, "ARRANGE");
         }
-        
-        //[Test]
-        //public void CreatePlayer_GivenNumber_ReturnFalse()
-        //{
-        //    Game game = new Game();
-            
 
-        //    using (StringWriter sw = new StringWriter())
-        //    {
-        //        Console.SetOut(sw);
+        [Test]
+        public void CreatePlayer_GivenNumber_ReturnFalse()
+        {
+            Game game = new Game();
 
-        //        StringReader sr = new StringReader(string.Format($"{game.playerName}", Environment.NewLine));
-        //        {
-        //            Console.SetIn(sr);
+            game.playerName = "C3PO";
+            game.OutputName(game.playerName);
 
-        //            string expected = string.Format("C3PO", Environment.NewLine);
+            Assert.False(game.validName);
+        }
 
-        //            Assert.AreEqual(expected, sw);
-        //        }
-                    
-        //    }
-            
-        //}
+        [Test]
+        public void CreatePlayer_GivenOnlyLetters_ReturnTrue()
+        {
+            Game game = new Game();
+
+            game.playerName = "Pelle";
+            game.OutputName(game.playerName);
+
+            Assert.True(game.validName);
+        }
+
+        [Test]
+        public void CreatePlayer_GivenNoInput_ReturnFalse()
+        {
+            Game game = new Game();
+
+            game.playerName = "";
+            game.OutputName(game.playerName);
+
+            Assert.False(game.validName);
+        }      
 
     }
 }

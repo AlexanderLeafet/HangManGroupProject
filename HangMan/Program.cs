@@ -13,14 +13,13 @@ namespace HangMan
         {
             Game game = new Game();
             game.WordHandling();
-            game.PlayerName();
+            game.InputName();
             do
             {
                 game.LetterInput();
                 game.GameStatus();
                 Console.WriteLine();
-                
-                
+   
             } while (game.gameWon == false && game.gameLost == false);
             Console.ReadKey();
             

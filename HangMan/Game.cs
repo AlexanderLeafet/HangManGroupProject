@@ -8,8 +8,6 @@ namespace HangMan
 {
     public class Game
     {
-        public dynamic random = new Random();
-
         public string playerName;
         public char guess;
         public string wordToGuess;
@@ -21,17 +19,17 @@ namespace HangMan
         public bool validName;
 
         public StringBuilder displayToPlayer;
-        
+        public dynamic random = new Random();
+
         string[] wordBank = File.ReadAllLines("Words.txt");
-        List<char> GuessedLetter = new List<char>();
+        List<char> GuessedLetters = new List<char>();
 
         public void WordHandling()
-        {
-            
+        {     
             wordToGuess = wordBank[random.Next(0, wordBank.Length)];
             wordToGuessUppercase = wordToGuess.ToUpper();
             displayToPlayer = new StringBuilder(wordToGuess.Length);
-            //Console.WriteLine(wordToGuessUppercase); //makes the hidden word Uppercase
+            
             for (int i = 0; i < wordToGuess.Length; i++)
                 displayToPlayer.Append('_');
         }
@@ -46,7 +44,7 @@ namespace HangMan
             {
                 InputStringToChar(input);
                 DoesLetterExistInTheWord();
-                GuessedLetter.Add(guess);
+                GuessedLetters.Add(guess);
             }
             else
             {
@@ -60,17 +58,17 @@ namespace HangMan
 
         public char InputStringToChar(string input)
         {
-            var answer = input[0];//stores the first letter in userinput to "guess" for example: HEY would be H
-                             //This is so that you can't guess several letters at once
+            var answer = input[0];  //stores the first letter in userinput to "guess" for example: HEY would be H
+                                    //This is so that you can't guess several letters at once
             guess = char.ToUpper(answer);
 
             return guess;
         }
 
-        public bool ValidCharacter(char guessInput)
+        public bool HasCharBeenUsed(char guessInput)
         {
             guess = guessInput;
-            if (GuessedLetter.Contains(guess))
+            if (GuessedLetters.Contains(guess))
             {
                 Console.WriteLine($"You already guessed the letter {guess}");
                 return false;
@@ -83,9 +81,9 @@ namespace HangMan
 
         public bool DoesLetterExistInTheWord()
         {
-            if (GuessedLetter.Contains(guess))
+            if (GuessedLetters.Contains(guess))
             {
-                return ValidCharacter(guess);
+                return HasCharBeenUsed(guess);
             }
             else if (wordToGuess.Contains(guess))
             {
@@ -100,48 +98,38 @@ namespace HangMan
                 Console.WriteLine($"The word contains your guessed letter {guess}.");
                 return true;
             }
-            
             else 
             {
                 Console.WriteLine($"The word does not contains the letter {guess}.");
 
-                DecreasingLives();
+                DecreaseLives();
                 return false;
             }        
         }
 
         public void GameStatus()
         {
-
             GameLost();
             GameWon();
-   
         }
 
-        public int DecreasingLives()
+        public int DecreaseLives()
         {
-           
-            lives--;
-
-            return lives;
+            return lives -= 1;
         }
         public bool GameLost()
         {
-
             Console.WriteLine($"Remaining lives: {lives}");
             if (lives == 0)
             {
-                Console.WriteLine("YOU DEAD!");
-                //Console.ReadKey();
-
+                Console.WriteLine("YOU LOST!");
+                Console.WriteLine($"The word was {wordToGuess}");
                 return gameLost = true;
-            }
-           
+            }           
             else
             {
                 return gameLost = false;
             }
-
         }
         public bool GameWon()
         {
@@ -152,25 +140,49 @@ namespace HangMan
                 
                 return gameWon = true;
             }
-
             else
             {
                 return gameWon = false;
             }
         }
 
-        public bool PlayerName()
-        { 
-            Console.Write("Please enter your username: ");
-            playerName = Console.ReadLine();
-            if (Regex.IsMatch(playerName, @"^[a-zA-Z]+$"))
+        public string InputName()
+        {
+             do
+             {
+                Console.Write("Please enter your username: ");
+                if (playerName == null)
+                {
+                    playerName = Console.ReadLine();
+                }
+
+                if (Regex.IsMatch(playerName, @"^[a-zA-Z]+$"))
+                {
+                    validName = true;
+                }
+                else
+                {
+                    Console.WriteLine("Name not valid. Please re-enter name");
+                    playerName = null;
+                    validName = false;
+                }
+
+            } while (validName == false);
+
+            return playerName;
+        }
+
+        public bool OutputName(string correctName)
+        {
+            if (Regex.IsMatch(correctName, @"^[a-zA-Z]+$"))
             {
-                return validName = true;
+                validName = true;
             }
             else
             {
-                return validName = false;
+                validName = false;
             }
+            return validName;
         }
      
 }
